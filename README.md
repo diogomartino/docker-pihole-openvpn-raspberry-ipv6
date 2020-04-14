@@ -1,3 +1,7 @@
+## What is this
+A docker system that joins pihole and openvpn to run directly in your Raspberry Pi. It will probably work on other devices, but **for different CPU architectures you may need to change the containers image.**
+Also, this was created because I spent so much time trying to get IPv6 to work and couldn't find any good guides, so here is one.
+**If you don't want OpenVPN, just remove the service from** `docker-composer.yml`.
 
 ## Clone this repository
     git clone https://github.com/bruxo00/docker-pihole-openvpn-raspberry-ipv6.git
@@ -50,6 +54,12 @@ Change the port if you want. In my case, I use 443 via UDP to avoid my universit
 
     sudo docker-compose up -d
 
+## This fixes these common errors
+
+    RTNETLINK answers: Network is unreachable
+    ERROR: ServerIPv6 Environment variable
+    TIP: If your server is not IPv6 enabled just remove '-e ServerIPv6' from your docker container
+And the one where docker doesn't start after changing the IPv6 settings on `/etc/docker/daemon.json`with the `fixed-cidr-v6` parameter.
 
 
 
