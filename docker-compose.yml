@@ -1,0 +1,45 @@
+version: '3.4'
+services:
+
+  openvpn:
+    cap_add:
+     - NET_ADMIN
+    image: giggio/openvpn-arm:latest
+    container_name: openvpn
+    ports:
+     - "443:1194/udp"
+    restart: always
+    volumes:
+     - ${ROOT}/openvpn:/etc/openvpn
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "8080:80/tcp"
+      - "4343:443/tcp"
+    environment:
+      TZ: 'Europe/Lisbon'
+      DNS1: ${DNS1}
+      DNS2: ${DNS2}
+      WEBPASSWORD: ${WEBPASSWORD}
+      ServerIP: ${IPV4}
+      IPv6: ${IPV6ENABLED}
+      ServerIPv6: ${IPV6}
+    volumes:
+       - '${ROOT}/pihole/etc-pihole/:/etc/pihole/'
+       - '${ROOT}/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    cap_add:
+      - NET_ADMIN
+    restart: always
+
+networks:
+  default:
+    external:
+      name: ipv6
