@@ -57,7 +57,7 @@ Change the port if you want. In my case, I use 443 via UDP to avoid my universit
 ## This fixes these common errors
 
     RTNETLINK answers: Network is unreachable
-    ERROR: ServerIPv6 Environment variable
+    ERROR: ServerIPv6 Environment variable doesn't appear to be a valid IPv6 address
     TIP: If your server is not IPv6 enabled just remove '-e ServerIPv6' from your docker container
 And the one where docker doesn't start after changing the IPv6 settings on `/etc/docker/daemon.json`with the `fixed-cidr-v6` parameter.
 
