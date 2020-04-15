@@ -1,3 +1,4 @@
+
 ## What is this
 A docker system that joins pihole and openvpn to run directly in your Raspberry Pi. It will probably work on other devices, but **for different CPU architectures you may need to change the containers image.**
 Also, this was created because I spent so much time trying to get IPv6 to work and couldn't find any good guides, so here is one.
@@ -60,7 +61,8 @@ Change the port if you want. In my case, I use 443 via UDP to avoid my universit
     ERROR: ServerIPv6 Environment variable doesn't appear to be a valid IPv6 address
     TIP: If your server is not IPv6 enabled just remove '-e ServerIPv6' from your docker container
 And the one where docker doesn't start after changing the IPv6 settings on `/etc/docker/daemon.json`with the `fixed-cidr-v6` parameter.
-
-
-
 ###### Based on [this tutorial](https://gist.github.com/zottelbeyer/c47b1a48b9c5c69796a712466e7fb71f).
+
+## Enable DHCP on PiHole
+Unfortunately I couldn't find a way to use PiHole as your DHCP server AND use IPv6 at the same time without using the host network mode. So, if you want to use DHCP and at the same time use IPv6, you will need to go to `sudo nano docker-compose.yml`and then on your `pihole` service comment or delete all the ports. Then add `network-mode: host`and restart your container.
+If you want to try to configure DHCP + IPv6 + Bridge Networking for yourself, check out [this thread](https://discourse.pi-hole.net/t/dhcp-with-docker-compose-and-bridge-networking/17038).
